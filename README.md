@@ -39,3 +39,30 @@ composer config -g repo.packagist composer https://packagist.phpcomposer.com
 composer create-project --prefer-dist laravel/laravel blog
 ```
 然后就是等待安装完成！
+``` bash
+php artisan serve
+```
+之后打开[127.0.0.1:8000](127.0.0.1:8000)
+<img src="book/3.jpg"/>
+然后我们就可以在vue里面愉快的玩了，但是还有个跨域的问题，由于端口号不同请求会被拒绝
+``` bash
+php artisan make:middleware Cors
+```
+打开 server_labs/app/Http/Middleware/Cors.php修改如下
+``` php
+// add in public function handle($request, Closure $next)
+$domain = ['http://localhost:8080'];
+if(isset($request->server()['HTTP_ORIGIN'])){
+    $origin = $request->server()['HTTP_ORIGIN'];
+    if(in_array($origin, $domain)){
+        header('Access-Control-Allow-Origin:' . $origin);
+        header('Access-Control-Allow-Headers: Origin, Content-Type, Authorization');
+    }
+}
+```
+打开server_labs/app/Http/Kernel.php
+``` php
+// add in protected $middleware
+\App\Http\middleware\Cors::class,
+```
+这时候就可以任意调用了！

@@ -7,7 +7,12 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  created () {
+    this.$http.get('http://localhost:8000/api/test').then(res => {
+      console.log(res)
+    })
+  }
 }
 </script>
 
