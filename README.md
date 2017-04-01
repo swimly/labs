@@ -66,3 +66,20 @@ if(isset($request->server()['HTTP_ORIGIN'])){
 \App\Http\middleware\Cors::class,
 ```
 这时候就可以任意调用了！
+
+打开.env文件
+```
+DB_CONNECTION=mysql
+//改成
+DB_CONNECTION=sqlite
+//删除
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=homestead
+DB_USERNAME=homestead
+DB_PASSWORD=secret
+```
+#### 添加 UsersTableSeeder
+``` bash
+php artisan make:seeder UsersTableSeeder
+```
